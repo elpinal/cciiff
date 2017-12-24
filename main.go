@@ -34,6 +34,8 @@ func run() error {
 	return clang(src)
 }
 
+const compiler = "clang"
+
 // Executes clang and outputs the file name of the result.
 func clang(src string) error {
 	file, err := ioutil.TempFile("", "cciiff")
