@@ -23,7 +23,11 @@ func run() error {
 		fmt.Fprintln(os.Stderr, "Usage: cciiff source_file_name")
 	}
 	flag.Parse()
-	src := flag.Arg(0)
+	args := flag.Args()
+	if len(args) != 1 {
+		return errors.New("no argument, but want 1 argument")
+	}
+	src := args[0]
 	return clang(src)
 }
 
