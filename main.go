@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -18,7 +19,12 @@ func main() {
 }
 
 func run() error {
-	return nil
+	flag.Usage = func() {
+		fmt.Fprintln(os.Stderr, "Usage: cciiff source_file_name")
+	}
+	flag.Parse()
+	src := flag.Arg(0)
+	return clang(src)
 }
 
 func clang(src string) error {
@@ -28,6 +34,7 @@ func clang(src string) error {
 	}
 	defer os.Remove(file.Name())
 	cmd := exec.Command("clang", "-o", file.Name(), src)
+	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
 		return errors.Wrap(err, "execute clang")
