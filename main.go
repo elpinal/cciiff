@@ -31,13 +31,13 @@ func run() error {
 		return errors.New("too many argument, but want just 1 argument")
 	}
 	src := args[0]
-	return clang(src)
+	return compile(src)
 }
 
 const compiler = "clang"
 
-// Executes clang and outputs the file name of the result.
-func clang(src string) error {
+// Executes compiling and outputs the file name of the result.
+func compile(src string) error {
 	file, err := ioutil.TempFile("", "cciiff")
 	if err != nil {
 		return errors.Wrap(err, "create a temporary file")
