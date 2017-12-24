@@ -24,8 +24,11 @@ func run() error {
 	}
 	flag.Parse()
 	args := flag.Args()
-	if len(args) != 1 {
+	if len(args) < 1 {
 		return errors.New("no argument, but want 1 argument")
+	}
+	if len(args) > 1 {
+		return errors.New("too many argument, but want just 1 argument")
 	}
 	src := args[0]
 	return clang(src)
