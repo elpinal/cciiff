@@ -39,6 +39,10 @@ func clang(src string) error {
 	if err != nil {
 		return errors.Wrap(err, "create a temporary file")
 	}
+	_, err = exec.LookPath("clang")
+	if err != nil {
+		return errors.New("no clang installed")
+	}
 	cmd := exec.Command("clang", "-o", file.Name(), src)
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
