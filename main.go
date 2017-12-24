@@ -44,7 +44,7 @@ func clang(src string) error {
 	}
 	_, err = exec.LookPath(compiler)
 	if err != nil {
-		return errors.New("no clang installed")
+		return fmt.Errorf("no %s installed", compiler)
 	}
 	cmd := exec.Command(compiler, "-o", file.Name(), src)
 	cmd.Stderr = os.Stderr
