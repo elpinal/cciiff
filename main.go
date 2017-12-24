@@ -36,12 +36,13 @@ func clang(src string) error {
 	if err != nil {
 		return errors.Wrap(err, "create a temporary file")
 	}
-	defer os.Remove(file.Name())
 	cmd := exec.Command("clang", "-o", file.Name(), src)
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
 	if err != nil {
+		os.Remove(file.Name())
 		return errors.Wrap(err, "execute clang")
 	}
+	fmt.Printf("file name: %s\n", file.Name())
 	return file.Close()
 }
