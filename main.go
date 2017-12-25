@@ -57,3 +57,18 @@ func compile(src string) error {
 	fmt.Printf("file name: %s\n", file.Name())
 	return file.Close()
 }
+
+func compileWithoutFile(src string) error {
+	_, err := exec.LookPath(compiler)
+	if err != nil {
+		return fmt.Errorf("no %s installed", compiler)
+	}
+	cmd := exec.Command(compiler, "-xc", "-o", os.Stdout.Name(), "-")
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = strings.NewReader(src)
+	err = cmd.Run()
+	if err != nil {
+		return errors.Wrapf(err, "execute %s", compiler)
+	}
+	return nil
+}
